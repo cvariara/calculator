@@ -13,7 +13,6 @@ const clear = document.querySelector('.clear');
 
 buttons.forEach((btn) => {
   btn.addEventListener('click', () => {
-    // console.log(btn.textContent);
     userInput.textContent += btn.textContent;
     if (btn.className === 'numbers' || btn.className === 'decimal') {
       displayValue += btn.textContent.toString()
@@ -25,12 +24,11 @@ buttons.forEach((btn) => {
     }
     if (btn.className === 'equals' && firstNum) {
       secondNum = parseFloat(displayValue);
-      // console.log(operate(operator, firstNum, secondNum));
       result.textContent = operate(operator, firstNum, secondNum);
     }
     if (btn.className === 'all-clear') {
       result.textContent = '';
-      userInput.textContent = '';
+      userInput.textContent = '0';
       displayValue = '';
       firstNum = undefined;
       secondNum = undefined;
@@ -41,8 +39,6 @@ buttons.forEach((btn) => {
     console.log('secondNum: ' + secondNum)
   })
 })
-
-
 
 function add(num1, num2) {
   return num1 + num2;
