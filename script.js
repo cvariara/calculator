@@ -5,7 +5,6 @@ let displayValue = "";
 
 const userInput = document.querySelector(".user-input");
 const result = document.querySelector(".result");
-const allButtons = document.querySelector(".buttons");
 const buttons = document.querySelectorAll("button");
 
 const allClear = document.querySelector(".all-clear");
@@ -39,9 +38,6 @@ function handleButtonClick(btn) {
   if (btnClass === "clear") {
     handleClearClick();
   }
-  console.log("displayValue: " + displayValue);
-  console.log("firstNum: " + firstNum);
-  console.log("secondNum: " + secondNum);
 }
 
 function handleOperatorClick(operatorText) {
@@ -53,8 +49,8 @@ function handleOperatorClick(operatorText) {
 function handleEqualsClick() {
   secondNum = parseFloat(displayValue);
   const calcResult = operate(operator, firstNum, secondNum);
-
-  if (Number.isInteger(calcResult)) {
+  console.log(calcResult)
+  if (Number.isInteger(calcResult) || typeof calcResult === 'string') {
     result.textContent = calcResult;
   } else {
     result.textContent = calcResult.toFixed(2);
@@ -96,6 +92,7 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
+  if (num2 === 0) return 'Infinity';
   return num1 / num2;
 }
 
