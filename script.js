@@ -19,6 +19,10 @@ function handleButtonClick(btn) {
   const btnText = btn.textContent;
   const btnClass = btn.className;
 
+  if (userInput.textContent === "0") {
+    userInput.textContent = "";
+  }
+
   userInput.textContent += btnText;
   if (btnClass === "numbers" || btnClass === "decimal") {
     displayValue += btnText;
@@ -33,8 +37,7 @@ function handleButtonClick(btn) {
     handleAllClearClick();
   }
   if (btnClass === "clear") {
-    displayValue = displayValue.substring(0, displayValue.length - 1);
-    userInput.textContent = displayValue;
+    handleClearClick();
   }
   console.log("displayValue: " + displayValue);
   console.log("firstNum: " + firstNum);
@@ -49,7 +52,13 @@ function handleOperatorClick(operatorText) {
 
 function handleEqualsClick() {
   secondNum = parseFloat(displayValue);
-  result.textContent = operate(operator, firstNum, secondNum);
+  const calcResult = operate(operator, firstNum, secondNum);
+
+  if (Number.isInteger(calcResult)) {
+    result.textContent = calcResult;
+  } else {
+    result.textContent = calcResult.toFixed(2);
+  }
 }
 
 function handleAllClearClick() {
@@ -62,7 +71,16 @@ function handleAllClearClick() {
 }
 
 function handleClearClick() {
-
+  if (result.textContent !== "") {
+    handleAllClearClick();
+    return;
+  }
+  if (displayValue.length > 0) {
+    displayValue = displayValue.slice(0, -1);
+    userInput.textContent = displayValue;
+  } else {
+    userInput.textContent = "0";
+  }
 }
 
 function add(num1, num2) {
@@ -81,6 +99,10 @@ function divide(num1, num2) {
   return num1 / num2;
 }
 
+function remainder(num1, num2) {
+  return num1 % num2;
+}
+
 function operate(operator, num1, num2) {
   switch (operator) {
     case "+":
@@ -89,8 +111,10 @@ function operate(operator, num1, num2) {
       return subtract(num1, num2);
     case "x":
       return multiply(num1, num2);
-    case "/":
+    case "÷":
       return divide(num1, num2);
+    case "%":
+      return remainder(num1, num2);
     default:
       break;
   }
