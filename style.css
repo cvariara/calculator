@@ -6,6 +6,12 @@
   box-sizing: border-box;
 }
 
+h1 {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 6rem;
+}
+
 .container {
   display: flex;
   align-items: center;
@@ -15,6 +21,8 @@
 .calculator {
   max-width: 300px;
   width: 100%;
+  /* border: 10px solid black;
+  border-radius: 10px; */
 }
 
 .display {
@@ -22,6 +30,7 @@
   height: 5rem;
   padding: 1rem;
   text-align: end;
+  border-radius: 10px 10px 0 0;
 }
 
 .display div {
@@ -32,5 +41,27 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
+  padding: 1rem;
   height: 100%;
+  background-color: rgb(235, 155, 37);
+  border-radius: 0 0 10px 10px;
+}
+
+.buttons button {
+  border-radius: 50%;
+  border: 0px solid transparent;
+  box-shadow: 4px 5px 5px 0 rgba(0, 0, 0, 0.2);
+  height: 60px;
+  width: 60px;
+  background-color: rgb(121, 121, 121);
+  color: white;
+  cursor: pointer;
+  font-size: 24px;
+  /* padding: 1rem 0; */
+}
+
+#equals {
+  grid-column: 3 / 5;
+  border-radius: 2.5rem;
+  width: 100%;
 }
