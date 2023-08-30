@@ -3,7 +3,6 @@ let operator;
 let secondNum;
 let displayValue = "";
 let intermediateResult = null;
-// good
 
 const userInput = document.querySelector(".user-input");
 const result = document.querySelector(".result");
@@ -24,6 +23,15 @@ function handleButtonClick(btn) {
     userInput.textContent = "";
   }
 
+  // don't do anything if an operator is clicked first
+  if (
+    (userInput.textContent === "0" || userInput.textContent === "") &&
+    btnClass === "operators"
+  ) {
+    handleAllClearClick();
+    return;
+  }
+
   // if result is infinity, don't do calculations
   // unless clear or all clear button is clicked
   if (result.textContent === "Infinity") {
@@ -34,7 +42,7 @@ function handleButtonClick(btn) {
   }
 
   if (userInput.textContent.includes("=")) {
-    if (!isNaN(btnText)) { 
+    if (!isNaN(btnText)) {
       handleAllClearClick();
     }
     userInput.textContent = result.textContent;
@@ -48,7 +56,7 @@ function handleButtonClick(btn) {
   }
 
   userInput.textContent += btnText;
-  
+
   if (btnClass === "numbers" || btnClass === "decimal") {
     displayValue += btnText;
   }
@@ -87,17 +95,20 @@ function handleOperatorClick(operatorText) {
 
   if (operator !== undefined) {
     const currentNum = parseFloat(displayValue);
-    console.log(`firstNum: ${firstNum}`)
+    console.log(`firstNum: ${firstNum}`);
     intermediateResult = operate(operator, firstNum, currentNum);
-    console.log(`intRes: ${intermediateResult}`)
+    console.log(`intRes: ${intermediateResult}`);
 
-    if (Number.isInteger(intermediateResult) || typeof intermediateResult === 'string') {
+    if (
+      Number.isInteger(intermediateResult) ||
+      typeof intermediateResult === "string"
+    ) {
       result.textContent = intermediateResult;
     } else {
       result.textContent = intermediateResult.toFixed(2);
     }
 
-    console.log(`displayValue: ${displayValue}`)
+    console.log(`displayValue: ${displayValue}`);
     displayValue = intermediateResult.toString();
   }
 
@@ -113,8 +124,11 @@ function handleEqualsClick() {
   if (operator !== undefined) {
     const currentNum = parseFloat(displayValue);
     intermediateResult = operate(operator, intermediateResult, currentNum);
-  
-    if (Number.isInteger(intermediateResult) || typeof intermediateResult === 'string') {
+
+    if (
+      Number.isInteger(intermediateResult) ||
+      typeof intermediateResult === "string"
+    ) {
       result.textContent = intermediateResult;
     } else {
       result.textContent = intermediateResult.toFixed(2);
@@ -138,12 +152,15 @@ function handleAllClearClick() {
 }
 
 function handleClearClick() {
-  if (result.textContent !== "") {
+  if (result.textContent !== "" && result.textContent !== "&nbsp;") {
     handleAllClearClick();
     return;
   }
 
-  if (displayValue.length > 0) {
+  if (displayValue.length > 0 && operator !== undefined) {
+    displayValue = displayValue.slice(0, -1);
+    userInput.textContent = firstNum + operator + displayValue;
+  } else if (displayValue.length > 0) {
     displayValue = displayValue.slice(0, -1);
     userInput.textContent = displayValue;
   } else {
@@ -164,7 +181,7 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-  if (num2 === 0) return 'Infinity';
+  if (num2 === 0) return "Infinity";
   return num1 / num2;
 }
 
